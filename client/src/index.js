@@ -1,15 +1,18 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
+import Register from 'screens/Register';
+import Signin from "./screens/Signin";
+import {BrowserRouter, Route, Switch} from 'react-router-dom';
 
 ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-  document.getElementById('root')
+  <BrowserRouter>
+      <Switch>
+          <Route path='/' exact render={props => <App {...props}/>}/>
+          <Route path='/register' exact render={props => <Register {...props}/>}/>
+          <Route path='/signin' exact render={props => <Signin {...props}/>}/>
+      </Switch>
+  </BrowserRouter>,
+document.getElementById('root')
 );
 
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
