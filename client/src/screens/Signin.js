@@ -1,9 +1,18 @@
 import React from 'react';
 
 const Signin = () => {
-    return (
-        <div>
+    const [formData, setFormData] = useState({
+        email: '',
+        name: '',
+        password: '',
+        textChange: 'Sign in'
+    });
 
+    return (
+        <div className="App">
+            <div>
+                <h1>Sign in</h1>
+            </div>
         </div>
     );
 };
