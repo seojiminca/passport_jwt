@@ -9,10 +9,12 @@ const Signin = () => {
     });
 
     return (
-        <div className="App">
-            <div>
-                <h1>Sign in</h1>
-            </div>
+        <div>
+            <h1>Sign in</h1>
+            <input placeholder="email" />
+            <input placeholder="name" />
+            <input placeholder="password" />
+            <button>Submit</button>
         </div>
     );
 };
