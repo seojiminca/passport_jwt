@@ -3,6 +3,7 @@ import React, {useState} from 'react';
 import axios from 'axios';
 
 const Register = () => {
+    //현재값, 업데이트값
     const [formData, setFormData] = useState({
         email: '',
         name: '',
@@ -14,6 +15,22 @@ const Register = () => {
 
     const handleChange = text => e => {//값이 들어오면 form 바뀐다. text:사용자입력값 e:each value
         setFormData({...formData, [text]: e.target.value});
+    }
+
+    const handleSubmit = e => {
+        e.preventDefault();
+
+        if(email && name && password){
+            setFormData({...formData, textChange: 'Submitting'});
+
+            axios
+                .post('http://localhost:5000/user/post', {
+                    email,
+                    name,
+                    password
+                })
+                
+        }
     }
 
     return (
