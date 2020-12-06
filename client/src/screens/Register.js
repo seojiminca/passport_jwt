@@ -29,7 +29,24 @@ const Register = () => {
                     name,
                     password
                 })
-                
+                .then(res => {
+                    setFormData({
+                        email: '',
+                        name: '',
+                        password: '',
+                        textChange: 'Submitting'
+                    })
+                })
+                .catch(err => {
+                    setFormData({
+                        email: '',
+                        name: '',
+                        password: '',
+                        textChange: 'Submitted'
+                    })
+                })
+        }else{
+            console.log)('Please fill out the form')
         }
     }
 
