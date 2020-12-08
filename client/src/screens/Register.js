@@ -24,7 +24,7 @@ const Register = () => {
             setFormData({...formData, textChange: 'Submitting'});
 
             axios
-                .post('http://localhost:5000/user/post', {
+                .post('http://localhost:5000/user/register', {
                     email,
                     name,
                     password
@@ -35,7 +35,7 @@ const Register = () => {
                         name: '',
                         password: '',
                         textChange: 'Submitting'
-                    })
+                    });
                 })
                 .catch(err => {
                     setFormData({
@@ -43,10 +43,10 @@ const Register = () => {
                         name: '',
                         password: '',
                         textChange: 'Submitted'
-                    })
+                    });
                 })
         }else{
-            console.log)('Please fill out the form')
+            console.log('Please fill out the form')
         }
     }
 

@@ -1,18 +1,23 @@
 import React, {useState} from 'react';
+import axios from 'axios';
 
 const Signin = () => {
     const [formData, setFormData] = useState({
         email: '',
-        name: '',
         password: '',
         textChange: 'Sign in'
     });
+
+    const {email, password, textChange} = formData;
+
+    const handleChange = text => e => {
+        setFormData({...formData, [text]: e.target.value});
+    }
 
     return (
         <div>
             <h1>Sign in</h1>
             <input placeholder="email" />
-            <input placeholder="name" />
             <input placeholder="password" />
             <button>Submit</button>
         </div>
