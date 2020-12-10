@@ -24,7 +24,7 @@ const Register = () => {
             setFormData({...formData, textChange: 'Submitting'});
 
             axios
-                .post('http://localhost:5000/user/register', {
+                .post('http://localhost:5000/users/register', {
                     email,
                     name,
                     password

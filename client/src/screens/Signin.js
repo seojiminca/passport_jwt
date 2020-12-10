@@ -14,6 +14,11 @@ const Signin = () => {
         setFormData({...formData, [text]: e.target.value});
     }
 
+    const handleSubmit = e => {
+        e.preventDefault();
+
+        
+    }
     return (
         <div>
             <h1>Sign in</h1>
