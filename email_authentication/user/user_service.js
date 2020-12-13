@@ -1,5 +1,5 @@
-const express = require('express');
 const userModel = require('./user_model');
+const bcrypt = require('bcrypt');
 
 module.exports = {
     register,
@@ -10,7 +10,17 @@ module.exports = {
 //@desc register
 //@access Public
 async function register(userParam) {
+    if(await userModel.findOne({email: userParam.email})){
+        throw 'Email " ' + userParam.email + '" is already taken';
+    }
 
+    const newUser = new userModel(userParam);
+
+    if(userParam.password){
+        newUser.password = await bcrypt.hashSync(userParam.password, 10);
+    }
+    
+    return await newUser.save();
 }
 
 
