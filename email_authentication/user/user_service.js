@@ -1,5 +1,6 @@
 const userModel = require('./user_model');
 const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
 
 module.exports = {
     register,
@@ -19,7 +20,7 @@ async function register(userParam) {
     if(userParam.password){
         newUser.password = await bcrypt.hashSync(userParam.password, 10);
     }
-    
+
     return await newUser.save();
 }
 
@@ -28,5 +29,20 @@ async function register(userParam) {
 //@desc signin
 //@access Public
 async function signin({email, password}) {
+    const user = await userModel.findOne({email})
 
+    if(!user){
+        return res.status(404).json(err => err.message);
+    }
+
+    if(user && bcrypt.compareSync(password, user.password)){
+        const token = jwt.sign({id: user.id}, process.env.SECRET_KEY, {expiresIn:3600});
+
+        return{
+            ...user.toJSON(),
+            token
+        }
+    }else{
+        return res.status(400).json(err => err.message);
+    }
 }
