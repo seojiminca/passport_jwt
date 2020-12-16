@@ -28,3 +28,15 @@ function signin(req, res, next) {
         .then((user) => res.json({user}))
         .catch(err => next(err));
 }
+
+//@route PATCH http://localhost:5000/users/update
+//@desc update
+//@access Private
+function update(req, res, next) {
+    userService.update(req.body)
+        .then((user) => res.json({user}))
+        .catch(err => next(err));
+}
+
+
+
