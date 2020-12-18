@@ -1,13 +1,15 @@
-const userModel = require('./user_model');
+const userModel = require('../model/user');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
 module.exports = {
     register,
-    signin
+    //signin,
+    //update
 }
 
-//@route POST http://localhost:5000/users
+
+//@route POST http://localhost:5000/users/register
 //@desc register
 //@access Public
 async function register(userParam) {
@@ -18,13 +20,13 @@ async function register(userParam) {
     const newUser = new userModel(userParam);
 
     if(userParam.password){
-        newUser.password = await bcrypt.hashSync(userParam.password, 10);
+        newUser.hashed = await bcrypt.hashSync(userParam.password, 10);
     }
 
     return await newUser.save();
 }
 
-
+/*
 //@route POST http://localhost:5000/users/signin
 //@desc signin
 //@access Public
@@ -46,3 +48,11 @@ async function signin({email, password}) {
         return res.status(400).json(err => err.message);
     }
 }
+
+//@route PATCH http://localhost:5000/users/update
+//@desc update
+//@access Private
+async function update({}){
+
+}
+*/

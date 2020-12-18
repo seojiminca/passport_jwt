@@ -4,13 +4,14 @@ const router = express.Router();
 const userService = require('./user_service');
 
 //routes
-router.post('/', register);
+router.post('/register', register);
 router.post('/signin', signin);
+router.patch('/update', update);
 
 module.exports = router;
 
 
-//@route POST http://localhost:5000/users
+//@route POST http://localhost:5000/users/register
 //@desc register
 //@access Public
 function register(req, res, next) {
@@ -18,7 +19,6 @@ function register(req, res, next) {
         .then((user) => res.json({user}))
         .catch(err => next(err));
 }
-
 
 //@route POST http://localhost:5000/users/signin
 //@desc signin

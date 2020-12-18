@@ -12,7 +12,6 @@ require('./config/db');
 
 const userRouter = require('./user/user_controller');
 
-
 //middleware
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
@@ -33,7 +32,6 @@ app.use(cookieParser(process.env.SECRET_KEY)) //same secret key with session.
 
 //router
 app.use('/users', userRouter);
-
 
 //start server
 const PORT = process.env.PORT || 7000;
