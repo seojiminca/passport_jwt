@@ -4,7 +4,7 @@ const jwt = require('jsonwebtoken');
 
 module.exports = {
     register,
-    //signin,
+    signin,
     //update
 }
 
@@ -26,29 +26,24 @@ async function register(userParam) {
     return await newUser.save();
 }
 
-/*
+
 //@route POST http://localhost:5000/users/signin
 //@desc signin
 //@access Public
 async function signin({email, password}) {
     const user = await userModel.findOne({email})
 
-    if(!user){
-        return res.status(404).json(err => err.message);
-    }
-
-    if(user && bcrypt.compareSync(password, user.password)){
+    if(user && bcrypt.compareSync(password, user.hashed)){
         const token = jwt.sign({id: user.id}, process.env.SECRET_KEY, {expiresIn:3600});
 
         return{
             ...user.toJSON(),
             token
         }
-    }else{
-        return res.status(400).json(err => err.message);
     }
 }
 
+/*
 //@route PATCH http://localhost:5000/users/update
 //@desc update
 //@access Private
