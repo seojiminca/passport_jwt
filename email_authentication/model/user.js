@@ -24,6 +24,10 @@ const userSchema = new mongoose.Schema(
         reset_password_link:{
             data: String,
             default: ''
+        },
+        role: {
+            type: String,
+            default: "user"
         }
     },
     {

@@ -7,6 +7,7 @@ const userService = require('./user_service');
 router.post('/register', register);
 router.post('/signin', signin);
 router.patch('/update', update);
+router.get('/', getAll);
 
 module.exports = router;
 
@@ -29,6 +30,8 @@ function signin(req, res, next) {
         .catch(err => next(err));
 }
 
+
+/*
 //@route PATCH http://localhost:5000/users/update
 //@desc update
 //@access Private
@@ -37,6 +40,14 @@ function update(req, res, next) {
         .then((user) => res.json({user}))
         .catch(err => next(err));
 }
+*/
 
-
+//@route GET http://localhost:5000/users/
+//@desc get all the users
+//@access Private
+function getAll(req, res, next) {
+    userService.getAll()
+        .then(users => res.json(users))
+        .catch(err => next(err));
+}
 
