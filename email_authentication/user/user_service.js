@@ -5,7 +5,9 @@ const jwt = require('jsonwebtoken');
 module.exports = {
     register,
     signin,
+    getAll
     //update
+
 }
 
 
@@ -20,7 +22,7 @@ async function register(userParam) {
     const newUser = new userModel(userParam);
 
     if(userParam.password){
-        newUser.hashed = await bcrypt.hashSync(userParam.password, 10);
+        newUser.hashed = await bcrypt.hashSync(userParam.password, 10); //password가 같아도 salt를 사용함으로써 hashed가 다르게 된다.
     }
 
     return await newUser.save();
@@ -51,3 +53,40 @@ async function update({}){
 
 }
 */
+
+//@route GET http://localhost:5000/users/
+//@desc get all the users
+//@access Private
+async function getAll() {
+
+    return await userModel.find();
+}
+
+/*
+router.get('/users', checkAuth, (req, res) => {
+   userModel
+       .findById(req.user.id)
+       .exec()
+       .then(user => {
+           if(user.role !== 'admin'){
+               res.json({
+                   error: 'It is not permitted'
+               })
+           }
+           userModel
+               .find()
+               .then(docs => {
+                   res.json({
+                       count: docs.length,
+                       userList: docs
+                   })
+               })
+       })
+       .catch(err => {
+          res.json({
+             error: err
+          });
+       });
+});
+
+ */

@@ -23,6 +23,7 @@ if (process.env.NODE_ENV === 'development') {
     app.use(morgan('dev'));
 }
 
+//required for passport
 app.use(session({
     secret: process.env.SECRET_KEY,
     resave: true,
