@@ -17,5 +17,7 @@
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.10.15",
     "morgan": "^1.10.0"
-  }
+  },
+  "repository": "https://seojiminca@github.com/seojiminca/email.git",
+  "author": "jimin <seojiminca@gmail.com>"
 }

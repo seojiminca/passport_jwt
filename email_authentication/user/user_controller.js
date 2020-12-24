@@ -31,7 +31,6 @@ function signin(req, res, next) {
 }
 
 
-/*
 //@route PATCH http://localhost:5000/users/update
 //@desc update
 //@access Private
@@ -40,7 +39,7 @@ function update(req, res, next) {
         .then((user) => res.json({user}))
         .catch(err => next(err));
 }
-*/
+
 
 //@route GET http://localhost:5000/users/
 //@desc get all the users
