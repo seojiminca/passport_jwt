@@ -5,9 +5,8 @@ const jwt = require('jsonwebtoken');
 module.exports = {
     register,
     signin,
-    getAll
-    //update
-
+    getAll,
+    update
 }
 
 
@@ -16,7 +15,7 @@ module.exports = {
 //@access Public
 async function register(userParam) {
     if(await userModel.findOne({email: userParam.email})){
-        throw 'Email " ' + userParam.email + '" is already taken';
+        throw 'Email " ' + userParam.email + '" is already taken'; //'throw' throws user-defined exception. if no catch block exists, the program will terminate.
     }
 
     const newUser = new userModel(userParam);
@@ -45,20 +44,19 @@ async function signin({email, password}) {
     }
 }
 
-/*
+
 //@route PATCH http://localhost:5000/users/update
 //@desc update
 //@access Private
 async function update({}){
 
 }
-*/
 
 //@route GET http://localhost:5000/users/
 //@desc get all the users
 //@access Private
 async function getAll() {
-
+    //role에 따라서 다르게 보이게.
     return await userModel.find();
 }
 
