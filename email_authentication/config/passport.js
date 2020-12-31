@@ -1,10 +1,25 @@
 const LocalStrategy = require('passport-local').Strategy;
+const bcrypt = require('bcrypt');
 
-function initialize(passport) {
-    const authenticateUser = (email, hashed, done) => {
-
+function initialize(passport, getUserByEmail) {
+    const authenticateUser = async (email, password, done) => {
+        const user = getUserByEmail(email)
+        if (user === null) {
+            return done(null, false, {message: 'No user with that Email'})
+        }
+        try {
+            if (await bcrypt.compare(password, user.password)) {
+                return done(null, user)
+            } else {
+                return done(null, false, {message: 'Password incorrect'})
+            }
+        } catch (e) {
+            return done(e)
+        }
     }
     passport.use(new LocalStrategy({usernameField: 'email', passwordField: 'hashed'}), authenticateUser)
-    passport.serializeUser((user, done) => {})
-    passport.deserializeUser((id, done) => {})
+    passport.serializeUser((user, done) => {}) //to store inside of the session.
+    passport.deserializeUser((id, done) => {}) //we're gonna serialize our user as a signle ID
 }
+
+module.exports = initialize
