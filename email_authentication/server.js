@@ -24,7 +24,10 @@ if (process.env.NODE_ENV === 'development') {
     app.use(morgan('dev'));
 }
 const initializePassport = require('./config/passport');
-initializePassport(passport);
+initializePassport(
+    passport,
+    email => users.find(user => user.email === email)
+);
 
 
 //required for passport
