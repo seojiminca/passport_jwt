@@ -26,7 +26,8 @@ if (process.env.NODE_ENV === 'development') {
 const initializePassport = require('./config/passport');
 initializePassport(
     passport,
-    email => users.find(user => user.email === email)
+    email => users.find(user => user.email === email),
+    id => users.find(user => user.id === id)
 );
 
 
