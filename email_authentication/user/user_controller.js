@@ -1,13 +1,14 @@
 const express = require('express');
 const router = express.Router();
-
+const passport = require('passport');
+const checkAuth = passport.authenticate('jwt', {session: false}); //
 const userService = require('./user_service');
 
 //routes
 router.post('/register', register);
 router.post('/signin', signin);
 router.patch('/update', update);
-router.get('/', getAll);
+router.get('/getall', getAll);
 
 module.exports = router;
 
@@ -34,7 +35,7 @@ function signin(req, res, next) {
 //@route PATCH http://localhost:5000/users/update
 //@desc update
 //@access Private
-function update(req, res, next) {
+function update(checkAuth, req, res, next) {
     userService.update(req.body)
         .then((user) => res.json({user}))
         .catch(err => next(err));
@@ -44,7 +45,7 @@ function update(req, res, next) {
 //@route GET http://localhost:5000/users/
 //@desc get all the users
 //@access Private
-function getAll(req, res, next) {
+function getAll(checkAuth, req, res, next) {
     userService.getAll()
         .then(users => res.json(users))
         .catch(err => next(err));
