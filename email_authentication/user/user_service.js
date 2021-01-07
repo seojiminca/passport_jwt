@@ -6,7 +6,8 @@ module.exports = {
     register,
     signin,
     getAll,
-    update
+    update,
+    delete: _delete
 }
 
 
@@ -45,7 +46,7 @@ async function signin({email, password}) {
 }
 
 
-//@route PATCH http://localhost:5000/users/update
+//@route PATCH http://localhost:5000/users/:id
 //@desc update
 //@access Private
 async function update({}){
@@ -88,3 +89,11 @@ router.get('/users', checkAuth, (req, res) => {
 });
 
  */
+
+
+//@route DELETE http://localhost:5000/users/:id
+//@desc delete the user
+//@access Private
+async function _delete(id){
+    await userModel.findByIdAndRemove(id);
+}
