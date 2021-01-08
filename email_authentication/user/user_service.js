@@ -5,6 +5,7 @@ const jwt = require('jsonwebtoken');
 module.exports = {
     register,
     signin,
+    getById,
     getAll,
     update,
     delete: _delete
@@ -50,7 +51,7 @@ async function signin({email, password}) {
 //@desc get current user
 //@access Private
 async function getById(id){
-    await userModel.findById(id);
+    return await userModel.findById(id);
 }
 
 

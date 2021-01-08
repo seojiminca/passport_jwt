@@ -7,7 +7,7 @@ const userService = require('./user_service');
 //routes
 router.post('/register', register);
 router.post('/signin', signin);
-router.get('/current', getCurrent);
+router.get('/:id', getById);
 router.get('/getall', getAll);
 router.patch('/:id', update);
 router.delete('/:id', _delete);
@@ -34,12 +34,12 @@ function signin(req, res, next) {
 }
 
 
-//@route GET http://localhost:5000/users/current
-//@desc get current user
+//@route GET http://localhost:5000/users/:id
+//@desc get user by id
 //@access Private
-function getCurrent(req, res, next) {
+function getById(req, res, next) {
     userService.getById(req.user.sub)
-        .then(user => res.json(user))
+        .then(user => user ? res.json(user) : res.sendStatus(404))
         .catch(err => next(err));
 }
 
