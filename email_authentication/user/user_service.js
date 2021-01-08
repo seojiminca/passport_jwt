@@ -46,6 +46,14 @@ async function signin({email, password}) {
 }
 
 
+//@route GET http://localhost:5000/users/current
+//@desc get current user
+//@access Private
+async function getById(id){
+    await userModel.findById(id);
+}
+
+
 //@route PATCH http://localhost:5000/users/:id
 //@desc update
 //@access Private

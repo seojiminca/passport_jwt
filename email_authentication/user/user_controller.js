@@ -1,14 +1,15 @@
 const express = require('express');
 const router = express.Router();
 const passport = require('passport');
-const checkAuth = passport.authenticate('jwt', {session: false}); //
+
 const userService = require('./user_service');
 
 //routes
 router.post('/register', register);
 router.post('/signin', signin);
-router.patch('/:id', update);
+router.get('/current', getCurrent);
 router.get('/getall', getAll);
+router.patch('/:id', update);
 router.delete('/:id', _delete);
 
 module.exports = router;
@@ -33,12 +34,12 @@ function signin(req, res, next) {
 }
 
 
-//@route PATCH http://localhost:5000/users/:id
-//@desc update
+//@route GET http://localhost:5000/users/current
+//@desc get current user
 //@access Private
-function update(checkAuth, req, res, next) {
-    userService.update(req.body)
-        .then(() => res.json({}))
+function getCurrent(req, res, next) {
+    userService.getById(req.user.sub)
+        .then(user => res.json(user))
         .catch(err => next(err));
 }
 
@@ -46,9 +47,19 @@ function update(checkAuth, req, res, next) {
 //@route GET http://localhost:5000/users/getall
 //@desc get all the users
 //@access Private
-function getAll(checkAuth, req, res, next) {
+function getAll(req, res, next) {
     userService.getAll()
         .then(users => res.json(users))
+        .catch(err => next(err));
+}
+
+
+//@route PATCH http://localhost:5000/users/:id
+//@desc update
+//@access Private
+function update(req, res, next) {
+    userService.update(req.body)
+        .then(() => res.json({}))
         .catch(err => next(err));
 }
 
@@ -56,8 +67,10 @@ function getAll(checkAuth, req, res, next) {
 //@route DELETE http://localhost:5000/users/:id
 //@desc delete the user
 //@access Private
-function _delete(checkAuth, req, res, next) {
+function _delete(req, res, next) {
     userService.delete(req.params.id) // req.params.id 로 /:id 의 값을 가지고올 수 있음. url을 분석 id or name의 값을 낚아챈다.
         .then(() => res.json({}))
         .catch(err => next(err));
 }
+
+
