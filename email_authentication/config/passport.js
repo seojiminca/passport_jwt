@@ -1,5 +1,7 @@
 const LocalStrategy = require('passport-local').Strategy;
+const {JWTStrategy, ExtractJwt} = require('passport-jwt');
 const bcrypt = require('bcrypt');
+const userModel = require('../model/user');
 
 function initialize(passport, getUserByEmail, getUserById) {
     const authenticateUser = async (email, password, done) => {
@@ -24,6 +26,30 @@ function initialize(passport, getUserByEmail, getUserById) {
     passport.deserializeUser((id, done) => { //we're gonna serialize our user as a single ID
         return done(null, getUserById(id))
     })
+
+
+    const opts = {
+        jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
+        secretOrKey: process.env.JWT_SECRET,
+    };
+
+    module.exports = passport => {
+        passport.use(
+            new JWTStrategy(opts, (payload, done) => {
+                userModel
+                    .findById(payload.id)
+                    .then(user => {
+                        if (user) {
+                            return done(null, user);
+                        }
+                        return done(null, false);
+                    })
+                    .catch(err => {
+                        console.log(err)
+                    });
+            })
+        );
+    }
 }
 
 module.exports = initialize
