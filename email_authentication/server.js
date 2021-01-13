@@ -15,7 +15,7 @@ const userRouter = require('./user/user_controller');
 
 //middleware
 app.use(bodyParser.json()); //
-app.use(bodyParser.urlencoded({extended: true}));
+app.use(bodyParser.urlencoded({extended: false})); //
 app.use(cookieParser(process.env.SECRET_KEY)) //same secret key with session.
 if (process.env.NODE_ENV === 'development') {
     app.use(cors({
@@ -34,11 +34,12 @@ initializePassport(
 //required for passport
 app.use(session({
     secret: process.env.SECRET_KEY, //session을 암호화해줌.
-    resave: false, //Should you resave if nothing has changed.
-    saveUninitialized: false //Do you want to save empty value in the session if there is no value.
+    resave: true, //Should you resave if nothing has changed.
+    saveUninitialized: true //Do you want to save empty value in the session if there is no value.
 }));
 app.use(passport.initialize());
-app.use(session());
+app.use(passport.session());
+
 
 
 //router
