@@ -1,16 +1,16 @@
 const express = require('express');
 const router = express.Router();
 const passport = require('passport');
-
+const checkAuth = require('../config/check_auth')
 const userService = require('./user_service');
 
 //routes
-router.post('/register', register);
+router.post('/register', register); //isAuthenticated 를 여기에 넣어보자.
 router.post('/signin', signin);
 router.get('/:id', getById);
 router.get('/getall', getAll);
 router.patch('/:id', update);
-router.delete('/:id', _delete);
+router.delete('/:id', checkAuth, _delete);
 
 module.exports = router;
 
@@ -38,8 +38,8 @@ function signin(req, res, next) {
 //@desc get user by id
 //@access Private
 function getById(req, res, next) {
-    userService.getById(req.user.sub)
-        .then(user => user ? res.json(user) : res.sendStatus(404))
+    userService.getById(req.params.id)
+        .then(user => res.json(user))
         .catch(err => next(err));
 }
 
