@@ -1,4 +1,4 @@
-const userModel = require('../model/user');
+const userModel = require('./user_model');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
@@ -55,13 +55,6 @@ async function getById(id){
 }
 
 
-//@route PATCH http://localhost:5000/users/:id
-//@desc update
-//@access Private
-async function update({}){
-
-}
-
 //@route GET http://localhost:5000/users/
 //@desc get all the users
 //@access Private
@@ -96,8 +89,32 @@ router.get('/users', checkAuth, (req, res) => {
           });
        });
 });
-
  */
+
+
+//@route PATCH http://localhost:5000/users/:id
+//@desc update
+//@access Private
+async function update({id, userParam}){
+    const user = await userModel.findById(id);
+
+    /** @namespace user.name **/
+    //https://stackoverflow.com/questions/20835544/how-to-fight-tons-of-unresolved-variables-warning-in-webstorm
+
+    if(!user) throw 'User not found';
+    if(user.name !== userParam.name && await userModel.findOne({name: userParam.name})){
+        throw 'Username "' + userParam.username + '" is already taken';
+    }
+
+    if(userParam.password){
+        userParam.hashed = await bcrypt.hashSync(userParam.password, 10);
+    }
+
+    //Object.assign - copy objects to target object. (target, source)
+    Object.assign(user, userParam);
+
+    await user.save();
+}
 
 
 //@route DELETE http://localhost:5000/users/:id

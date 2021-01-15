@@ -1,7 +1,7 @@
 const LocalStrategy = require('passport-local').Strategy;
-const {JWTStrategy, ExtractJwt} = require('passport-jwt');
+const {JwtStrategy, ExtractJwt} = require('passport-jwt');
 const bcrypt = require('bcrypt');
-const userModel = require('../model/user');
+const userModel = require('../user/user_model');
 
 function initialize(passport, getUserByEmail, getUserById) {
     const authenticateUser = async (email, password, done) => {
@@ -35,7 +35,8 @@ function initialize(passport, getUserByEmail, getUserById) {
 
     module.exports = passport => {
         passport.use(
-            new JWTStrategy(opts, (payload, done) => {
+            'jwt',
+            new JwtStrategy(opts, (payload, done) => {
                 userModel
                     .findById(payload.id)
                     .then(user => {
