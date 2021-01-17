@@ -7,10 +7,12 @@ const userService = require('./user_service');
 //routes
 router.post('/register', register); //isAuthenticated 를 여기에 넣어보자.
 router.post('/signin', signin);
+router.get('/current', getCurrent);
 router.get('/:id', getById);
 router.get('/getall', getAll);
-router.patch('/:id', update);
-router.delete('/:id', checkAuth, _delete);
+router.patch('/:id', update); //checkAuth
+router.delete('/:id', _delete);
+//router.delete('/:id', passport.authenticate('jwt', { session: false }), _delete);
 
 module.exports = router;
 
@@ -33,12 +35,21 @@ function signin(req, res, next) {
         .catch(err => next(err));
 }
 
+//@route GET http://localhost:5000/users/current
+//@desc get current user
+//@access Private
+function getCurrent(req, res, next) {
+    userService.getById(req.user.sub)//req.user is alias for req.session.user
+        .then(user => user ? res.json(user) : res.sendStatus(404)) //?
+        .catch(err => next(err));
+}
+
 
 //@route GET http://localhost:5000/users/:id
 //@desc get user by id
 //@access Private
 function getById(req, res, next) {
-    userService.getById(req.params.id)
+    userService.getById(req.params.id)//url울 분석 id 또는 name에 있는 값을 낚아챈다.
         .then(user => res.json(user))
         .catch(err => next(err));
 }
