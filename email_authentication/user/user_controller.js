@@ -22,7 +22,7 @@ module.exports = router;
 //@access Public
 function register(req, res, next) {
     userService.register(req.body)
-        .then((user) => res.json({user}))
+        .then((user) => res.json(user))
         .catch(err => next(err));
 }
 
@@ -31,7 +31,7 @@ function register(req, res, next) {
 //@access Public
 function signin(req, res, next) {
     userService.signin(req.body)
-        .then((user) => res.json({user}))
+        .then((user) => res.json(user))
         .catch(err => next(err));
 }
 
@@ -70,7 +70,7 @@ function getAll(req, res, next) {
 //@access Private
 function update(req, res, next) {
     userService.update(req.params.id, req.body)
-        .then(() => res.json({}))
+        .then(() => res.json('user updated'))
         .catch(err => next(err));
 }
 
@@ -80,7 +80,7 @@ function update(req, res, next) {
 //@access Private
 function _delete(req, res, next) {
     userService.delete(req.params.id) // req.params.id 로 /:id 의 값을 가지고올 수 있음. url을 분석 id or name의 값을 낚아챈다.
-        .then(() => res.json({}))
+        .then(() => res.json('deleted successfully'))
         .catch(err => next(err));
 }
 

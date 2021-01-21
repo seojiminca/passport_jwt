@@ -48,6 +48,7 @@ async function signin({email, password}) {
 
 
 //@route GET http://localhost:5000/users/current
+//@route GET http://localhost:5000/users/:id
 //@desc get current user
 //@access Private
 async function getById(id){
@@ -55,7 +56,7 @@ async function getById(id){
 }
 
 
-//@route GET http://localhost:5000/users/
+//@route GET http://localhost:5000/users/getall
 //@desc get all the users
 //@access Private
 async function getAll() {
@@ -95,7 +96,7 @@ router.get('/users', checkAuth, (req, res) => {
 //@route PATCH http://localhost:5000/users/:id
 //@desc update
 //@access Private
-async function update({id, userParam}){
+async function update(id, userParam){
     const user = await userModel.findById(id);
 
     /** @namespace user.name **/
