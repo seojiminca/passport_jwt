@@ -12,6 +12,7 @@ const app = express();
 require('./config/db');
 
 const userRouter = require('./user/user_controller');
+const errorHandler = require('./middleware/error-handler');
 
 //middleware
 app.use(bodyParser.json()); //
@@ -31,6 +32,8 @@ initializePassport(
     id => users.find(user => user.id === id)
 );
 
+//require('./config/passport')(passport);
+
 //required for passport
 app.use(session({
     secret: process.env.SECRET_KEY, //session을 암호화해줌.
@@ -40,7 +43,8 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
-
+//global error-handler
+app.use(errorHandler);
 
 //router
 app.use('/users', userRouter);
