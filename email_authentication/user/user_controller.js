@@ -70,7 +70,7 @@ function getAll(req, res, next) {
 //@access Private
 function update(req, res, next) {
     userService.update(req.params.id, req.body)
-        .then(() => res.json('user updated'))
+        .then((user) => res.json(user))
         .catch(err => next(err));
 }
 
