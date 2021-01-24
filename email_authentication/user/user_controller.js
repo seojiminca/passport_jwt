@@ -9,7 +9,7 @@ router.post('/register', register); //isAuthenticated 를 여기에 넣어보자
 router.post('/signin', signin);
 router.get('/current', getCurrent);
 router.get('/:id', getById);
-router.get('/getall', getAll);
+router.get('/', getAll);
 router.patch('/:id', update); //checkAuth
 router.delete('/:id', _delete);
 //router.delete('/:id', passport.authenticate('jwt', { session: false }), _delete);
@@ -56,7 +56,7 @@ function getById(req, res, next) {
 
 
 //@route GET http://localhost:5000/users/getall
-//@desc get all the users
+//@desc get all users
 //@access Private
 function getAll(req, res, next) {
     userService.getAll()

@@ -57,7 +57,7 @@ async function getById(id){
 
 
 //@route GET http://localhost:5000/users/getall
-//@desc get all the users
+//@desc get all users
 //@access Private
 async function getAll() {
     //role에 따라서 다르게 보이게.
