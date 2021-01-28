@@ -15,8 +15,8 @@ const userRouter = require('./user/user_controller');
 const errorHandler = require('./middleware/error-handler');
 
 //middleware
-app.use(bodyParser.json()); //
-app.use(bodyParser.urlencoded({extended: false})); //
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended: false}));
 app.use(cookieParser(process.env.SECRET_KEY)) //same secret key with session.
 if (process.env.NODE_ENV === 'development') {
     app.use(cors({
@@ -25,14 +25,15 @@ if (process.env.NODE_ENV === 'development') {
     }))
     app.use(morgan('dev'));
 }
-const initializePassport = require('./config/passport');
-initializePassport(
-    passport,
-    email => users.find(user => user.email === email),
-    id => users.find(user => user.id === id)
-);
 
-//require('./config/passport')(passport);
+
+//const initializePassport = require('./config/passport');
+// initializePassport(
+//     passport,
+//     email => users.find(user => user.email === email),
+//     id => users.find(user => user.id === id)
+// );
+
 
 //required for passport
 app.use(session({
@@ -42,6 +43,9 @@ app.use(session({
 }));
 app.use(passport.initialize());
 app.use(passport.session());
+
+require('./config/passport')(passport);
+
 
 //global error-handler
 app.use(errorHandler);

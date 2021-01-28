@@ -1,9 +1,10 @@
 const express = require('express');
 const router = express.Router();
 const passport = require('passport');
-const checkAuth = require('../config/check_auth')
+//const checkAuth = require('../config/check_auth')
 const userService = require('./user_service');
 
+const checkAuth = passport.authenticate('jwt', { session: false });
 //routes
 router.post('/register', register); //isAuthenticated 를 여기에 넣어보자.
 router.post('/signin', signin);
@@ -11,8 +12,7 @@ router.get('/current', getCurrent);
 router.get('/:id', getById);
 router.get('/', getAll);
 router.patch('/:id', update); //checkAuth
-router.delete('/:id', _delete);
-//router.delete('/:id', passport.authenticate('jwt', { session: false }), _delete);
+router.delete('/:id', checkAuth, _delete);
 
 module.exports = router;
 
@@ -39,7 +39,7 @@ function signin(req, res, next) {
 //@desc get current user
 //@access Private
 function getCurrent(req, res, next) {
-    userService.getById(req.user.sub)//req.user is alias for req.session.user
+    userService.getById(req.user)//req.user is alias for req.session.user
         .then(user => user ? res.json(user) : res.sendStatus(404)) //?
         .catch(err => next(err));
 }
