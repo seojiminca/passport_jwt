@@ -56,41 +56,12 @@ async function getById(id){
 }
 
 
-//@route GET http://localhost:5000/users/getall
+//@route GET http://localhost:5000/users
 //@desc get all users
 //@access Private
 async function getAll() {
-    //role에 따라서 다르게 보이게.
     return await userModel.find();
 }
-
-/*
-router.get('/users', checkAuth, (req, res) => {
-   userModel
-       .findById(req.user.id)
-       .exec()
-       .then(user => {
-           if(user.role !== 'admin'){
-               res.json({
-                   error: 'It is not permitted'
-               })
-           }
-           userModel
-               .find()
-               .then(docs => {
-                   res.json({
-                       count: docs.length,
-                       userList: docs
-                   })
-               })
-       })
-       .catch(err => {
-          res.json({
-             error: err
-          });
-       });
-});
- */
 
 
 //@route PATCH http://localhost:5000/users/:id

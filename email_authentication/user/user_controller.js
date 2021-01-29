@@ -8,10 +8,10 @@ const checkAuth = passport.authenticate('jwt', { session: false });
 //routes
 router.post('/register', register); //isAuthenticated 를 여기에 넣어보자.
 router.post('/signin', signin);
-router.get('/current', getCurrent);
-router.get('/:id', getById);
+router.get('/current', checkAuth, getCurrent);
+router.get('/:id', checkAuth, getById);
 router.get('/', getAll);
-router.patch('/:id', update); //checkAuth
+router.patch('/:id', checkAuth, update);
 router.delete('/:id', checkAuth, _delete);
 
 module.exports = router;
@@ -55,7 +55,7 @@ function getById(req, res, next) {
 }
 
 
-//@route GET http://localhost:5000/users/getall
+//@route GET http://localhost:5000/users
 //@desc get all users
 //@access Private
 function getAll(req, res, next) {

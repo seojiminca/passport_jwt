@@ -1,5 +1,7 @@
 //const LocalStrategy = require('passport-local').Strategy;
-const {Strategy, ExtractJwt} = require('passport-jwt');
+//const {Strategy, ExtractJwt} = require('passport-jwt'); //여기서는 JwtStrategy 사용못함. type error!
+const JwtStrategy = require('passport-jwt').Strategy;
+const ExtractJwt = require('passport-jwt').ExtractJwt;
 //const bcrypt = require('bcrypt');
 const userModel = require('../user/user_model');
 
@@ -10,7 +12,7 @@ opts.secretOrKey = process.env.SECRET_KEY || 'secret';
 
 module.exports = passport => {
     passport.use(
-        new Strategy(opts, (payload, done) => {
+        new JwtStrategy(opts, (payload, done) => {
             userModel
                 .findById(payload.id)
                 .then(user => {
