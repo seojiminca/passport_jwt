@@ -20,6 +20,10 @@ async function register(userParam) {
         throw 'Email " ' + userParam.email + '" is already taken'; //'throw' throws user-defined exception. if no catch block exists, the program will terminate.
     }
 
+    if(await userModel.findOne({name: userParam.name})){
+        throw 'Username " ' + userParam.name + '" is already taken';
+    }
+
     const newUser = new userModel(userParam);
 
     if(userParam.password){
@@ -75,7 +79,7 @@ async function update(id, userParam){
 
     if(!user) throw 'User not found';
     if(user.name !== userParam.name && await userModel.findOne({name: userParam.name})){
-        throw 'Username "' + userParam.username + '" is already taken';
+        throw 'Username "' + userParam.name + '" is already taken';
     }
 
     if(userParam.password){

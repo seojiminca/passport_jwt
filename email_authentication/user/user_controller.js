@@ -1,12 +1,11 @@
 const express = require('express');
 const router = express.Router();
 const passport = require('passport');
-//const checkAuth = require('../config/check_auth')
 const userService = require('./user_service');
 
 const checkAuth = passport.authenticate('jwt', { session: false });
 //routes
-router.post('/register', register); //isAuthenticated 를 여기에 넣어보자.
+router.post('/register', register);
 router.post('/signin', signin);
 router.get('/current', checkAuth, getCurrent);
 router.get('/:id', checkAuth, getById);
