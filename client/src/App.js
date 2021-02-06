@@ -5,6 +5,7 @@ function App() {
     return (
         <div className="App">
             <div>
+                <h1>Home</h1>
                 <Link to={'/register'}>
                     <span>Register</span>
                 </Link>
