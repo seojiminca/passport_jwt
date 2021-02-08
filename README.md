@@ -1,1 +1,1 @@
-email_authentication
+passport-jwt authentication
