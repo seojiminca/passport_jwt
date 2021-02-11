@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
-import Register from 'screens/Register';
+import Register from './screens/Register';
 import Signin from "./screens/Signin";
 import {BrowserRouter, Route, Switch} from 'react-router-dom';
 

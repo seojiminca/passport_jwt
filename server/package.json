@@ -29,6 +29,6 @@
     "passport-jwt": "^4.0.0",
     "passport-local": "^1.0.0"
   },
-  "repository": "https://seojiminca@github.com/seojiminca/email.git",
+  "repository": "https://github.com/seojiminca/passport_jwt",
   "author": "jimin <seojiminca@gmail.com>"
 }
