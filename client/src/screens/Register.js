@@ -20,7 +20,7 @@ const Register = () => {
     const handleSubmit = e => {
         e.preventDefault();
 
-        if(email && name && password){
+        if (email && name && password) {
             setFormData({...formData, textChange: 'Submitting'});
 
             axios
@@ -45,7 +45,7 @@ const Register = () => {
                         textChange: 'Submitted'
                     });
                 })
-        }else{
+        } else {
             console.log('Please fill out the form')
         }
     }
@@ -53,10 +53,23 @@ const Register = () => {
     return (
         <div>
             <h1>Register</h1>
-            <input placeholder="email"/>
-            <input placeholder="name" />
-            <input placeholder="password"/>
-            <button>Submit</button>
+            <form onSubmit={handleSubmit}>
+                <input placeholder="email"
+                       type='email'
+                       value={email}
+                       onChange={handleChange('email')}/>
+                <input placeholder="name"
+                       type='text'
+                       value={name}
+                       onChange={handleChange('name')}/>
+                <input placeholder="password"
+                       type='password'
+                       value={password}
+                       onChange={handleChange('password')}/>
+                <button type='submit'>
+                    <span>{textChange}</span>
+                </button>
+            </form>
         </div>
     );
 };
