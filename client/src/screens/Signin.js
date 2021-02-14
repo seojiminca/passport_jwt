@@ -37,9 +37,19 @@ const Signin = () => {
     return (
         <div>
             <h1>Sign in</h1>
-            <input placeholder="email" />
-            <input placeholder="password" />
-            <button>Submit</button>
+            <form onSubmit={handleSubmit}>
+                <input placeholder="email"
+                       type='email'
+                       value={email}
+                       onChange={handleChange('email')}/>
+                <input placeholder="password"
+                       type='password'
+                       value={password}
+                       onChange={handleChange('password')}/>
+                <button type='submit'>
+                    <span>{textChange}</span>
+                </button>
+            </form>
         </div>
     );
 };
