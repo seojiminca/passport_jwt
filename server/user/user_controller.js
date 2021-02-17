@@ -2,11 +2,13 @@ const express = require('express');
 const router = express.Router();
 const passport = require('passport');
 const userService = require('./user_service');
-
+const {validSignup, validLogin} = require('../middleware/validation')
+const {validationResult} = require('express-validator'); //validation 결과가 담긴다.
 const checkAuth = passport.authenticate('jwt', { session: false });
+
 //routes
-router.post('/register', register);
-router.post('/signin', signin);
+router.post('/register', validSignup, register);
+router.post('/signin', validLogin, signin);
 router.get('/current', checkAuth, getCurrent);
 router.get('/:id', checkAuth, getById);
 router.get('/', getAll);
@@ -20,19 +22,29 @@ module.exports = router;
 //@desc register
 //@access Public
 function register(req, res, next) {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        return res.status(422).json(errors) //errors: errors //이름이 같으니까 생략가능.
+    }
     userService.register(req.body)
         .then((user) => res.json(user))
         .catch(err => next(err));
 }
 
+
 //@route POST http://localhost:5000/users/signin
 //@desc signin
 //@access Public
 function signin(req, res, next) {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        return res.status(422).json(errors)
+    }
     userService.signin(req.body)
         .then((user) => res.json(user))
         .catch(err => next(err));
 }
+
 
 //@route GET http://localhost:5000/users/current
 //@desc get current user
