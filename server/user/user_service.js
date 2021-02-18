@@ -16,17 +16,17 @@ module.exports = {
 //@desc register
 //@access Public
 async function register(userParam) {
-    if(await userModel.findOne({email: userParam.email})){
+    if (await userModel.findOne({email: userParam.email})) {
         throw 'Email " ' + userParam.email + '" is already taken'; //'throw' throws user-defined exception. if no catch block exists, the program will terminate.
     }
 
-    if(await userModel.findOne({name: userParam.name})){
+    if (await userModel.findOne({name: userParam.name})) {
         throw 'Username " ' + userParam.name + '" is already taken';
     }
 
     const newUser = new userModel(userParam);
 
-    if(userParam.password){
+    if (userParam.password) {
         newUser.hashed = await bcrypt.hashSync(userParam.password, 10); //password가 같아도 salt를 사용함으로써 hashed가 다르게 된다.
     }
 
@@ -40,10 +40,10 @@ async function register(userParam) {
 async function signin({email, password}) {
     const user = await userModel.findOne({email})
 
-    if(user && bcrypt.compareSync(password, user.hashed)){
-        const token = jwt.sign({id: user.id}, process.env.SECRET_KEY, {expiresIn:3600});
+    if (user && bcrypt.compareSync(password, user.hashed)) {
+        const token = jwt.sign({id: user.id}, process.env.SECRET_KEY, {expiresIn: 3600});
 
-        return{
+        return {
             ...user.toJSON(),
             token
         }
@@ -55,7 +55,7 @@ async function signin({email, password}) {
 //@route GET http://localhost:5000/users/:id
 //@desc get current user
 //@access Private
-async function getById(id){
+async function getById(id) {
     return await userModel.findById(id);
 }
 
@@ -71,18 +71,18 @@ async function getAll() {
 //@route PATCH http://localhost:5000/users/:id
 //@desc update
 //@access Private
-async function update(id, userParam){
+async function update(id, userParam) {
     const user = await userModel.findById(id);
 
     /** @namespace user.name **/
     //https://stackoverflow.com/questions/20835544/how-to-fight-tons-of-unresolved-variables-warning-in-webstorm
 
-    if(!user) throw 'User not found';
-    if(user.name !== userParam.name && await userModel.findOne({name: userParam.name})){
+    if (!user) throw 'User not found';
+    if (user.name !== userParam.name && await userModel.findOne({name: userParam.name})) {
         throw 'Username "' + userParam.name + '" is already taken';
     }
 
-    if(userParam.password){
+    if (userParam.password) {
         userParam.hashed = await bcrypt.hashSync(userParam.password, 10);
     }
 
@@ -98,6 +98,6 @@ async function update(id, userParam){
 //@route DELETE http://localhost:5000/users/:id
 //@desc delete the user
 //@access Private
-async function _delete(id){
+async function _delete(id) {
     await userModel.findByIdAndRemove(id);
 }

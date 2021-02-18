@@ -27,22 +27,22 @@ const Register = () => {
                 .post('http://localhost:5000/users/register', {
                     email,
                     name,
-                    password
+                    password,
+                    textChange: 'Submitting'
                 })
                 .then(res => {
                     setFormData({
                         email: '',
                         name: '',
                         password: '',
-                        textChange: 'Submitting'
+                        textChange: 'Submitted'
                     });
                 })
                 .catch(err => {
                     setFormData({
                         email: '',
                         name: '',
-                        password: '',
-                        textChange: 'Submitted'
+                        password: ''
                     });
                 })
         } else {

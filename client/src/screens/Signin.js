@@ -22,12 +22,14 @@ const Signin = () => {
             axios
                 .post('http://localhost:5000/users/signin', {
                     email,
-                    password
+                    password,
+                    textChange: 'Submitting'
                 })
                 .then(res => {
                     setFormData({
                         email: '',
-                        password: ''
+                        password: '',
+                        textChange: 'Submitted'
                     })
                 })
         }else{
