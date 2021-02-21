@@ -8,6 +8,7 @@ const checkAuth = passport.authenticate('jwt', { session: false });
 
 //routes
 router.post('/register', validSignup, register);
+router.post('/:id', activation);
 router.post('/signin', validLogin, signin);
 router.get('/current', checkAuth, getCurrent);
 router.get('/:id', checkAuth, getById);
@@ -27,6 +28,16 @@ function register(req, res, next) {
         return res.status(422).json(errors) //errors: errors //이름이 같으니까 생략가능.
     }
     userService.register(req.body)
+        .then((user) => res.json(user))
+        .catch(err => next(err));
+}
+
+
+//@route    POST http://localhost:5000/users/activation
+//@desc     user activation / save user
+//@access   Private
+function activation(req, res, next){
+    userService.activation(req.body)
         .then((user) => res.json(user))
         .catch(err => next(err));
 }
