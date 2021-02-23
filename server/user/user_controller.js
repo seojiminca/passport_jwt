@@ -8,7 +8,7 @@ const checkAuth = passport.authenticate('jwt', { session: false });
 
 //routes
 router.post('/register', validSignup, register);
-router.post('/:id', activation);
+router.post('/activation/:token', activation);
 router.post('/signin', validLogin, signin);
 router.get('/current', checkAuth, getCurrent);
 router.get('/:id', checkAuth, getById);
@@ -33,7 +33,7 @@ function register(req, res, next) {
 }
 
 
-//@route    POST http://localhost:5000/users/activation
+//@route    POST http://localhost:5000/users/activation/:token
 //@desc     user activation / save user
 //@access   Private
 function activation(req, res, next){
