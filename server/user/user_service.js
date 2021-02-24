@@ -35,8 +35,8 @@ async function register(userParam) {
 }
 
 
-//@route    POST http://localhost:5000/users/activation
-//@desc     user activation / save user
+//@route    POST http://localhost:5000/users/activation/:token
+//@desc     check token 
 //@access   Private
 async function activation(token){
     if(token){
