@@ -4,7 +4,6 @@ const jwt = require('jsonwebtoken');
 
 module.exports = {
     register,
-    activation,
     signin,
     getById,
     getAll,
@@ -32,22 +31,6 @@ async function register(userParam) {
     }
 
     return await newUser.save();
-}
-
-
-//@route    POST http://localhost:5000/users/activation/:token
-//@desc     check token 
-//@access   Private
-async function activation(token){
-    if(token){
-        jwt.verify(token, process.env.SECRET_KEY, (err,decoded) => {
-            if(err){
-                return err;
-            }else{
-                return decoded;
-            }
-        })
-    }
 }
 
 

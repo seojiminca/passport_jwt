@@ -1,5 +1,7 @@
 import React, {useState} from 'react';
 import axios from 'axios';
+import { isAuth } from '../helpers/auth';
+import { Redirect } from 'react-router-dom';
 
 const Signin = () => {
     const [formData, setFormData] = useState({
@@ -38,6 +40,7 @@ const Signin = () => {
     }
     return (
         <div>
+            {isAuth() ? <Redirect to='/' /> : null}
             <h1>Sign in</h1>
             <form onSubmit={handleSubmit}>
                 <input placeholder="email"
