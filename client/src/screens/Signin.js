@@ -1,16 +1,30 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import axios from 'axios';
+import jwt from 'jsonwebtoken';
 import { isAuth } from '../helpers/auth';
 import { Redirect } from 'react-router-dom';
 
-const Signin = () => {
+const Signin = ({match}) => {
     const [formData, setFormData] = useState({
         email: '',
         password: '',
-        textChange: 'Sign in'
+        token:'',
+        textChange: 'Sign in',
+        show: true
     });
 
-    const {email, password, textChange} = formData;
+    useEffect(() => {
+        let token = match.params.token;
+        let { email } = jwt.decode(token);
+
+        if (token) {
+            setFormData({ ...formData, email, password, token, textChange });
+        }
+
+        console.log(token, email);
+    }, [match.params]);
+
+    const {email, password, token, textChange} = formData;
 
     const handleChange = text => e => {
         setFormData({...formData, [text]: e.target.value});
@@ -23,15 +37,12 @@ const Signin = () => {
             setFormData({...formData, textChange: 'Submitting'});
             axios
                 .post('http://localhost:5000/users/signin', {
-                    email,
-                    password,
-                    textChange: 'Submitting'
+                    token
                 })
                 .then(res => {
                     setFormData({
-                        email: '',
-                        password: '',
-                        textChange: 'Submitted'
+                        ...formData,
+                        show: false
                     })
                 })
         }else{
